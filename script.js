@@ -15,6 +15,13 @@ const myLibrary = [
         author: "Ichiro Kishimi & Fumitake Koga",
         pages: 336,
         status: "unread",
+    },
+    {
+        id: 123457,
+        title: "Laut Bercerita",
+        author: "Laila S. Chudori",
+        pages: 394,
+        status: "unread",
     }
 ];
 
@@ -29,6 +36,7 @@ function Book(title, author, pages, status) {
 
 function addBookToLibrary(title, author, pages, status) {
     const newBook = new Book(title, author, pages, status);
+    myLibrary.push(newBook);
 }
 
 function displayBook(arr){
@@ -36,24 +44,24 @@ function displayBook(arr){
         const div = document.createElement("div");
         div.classList.add("card");
         
-        const title = document.createElement("h3");
-        title.textContent = book.title;
-
         const id = document.createElement("p");
-        id.textContent = book.id;
+        id.textContent = `ID: ${book.id}`;
+
+        const title = document.createElement("p");
+        title.textContent = `Title: ${book.title}`;
 
         const author = document.createElement("p");
-        author.textContent = book.author;
+        author.textContent = `Author: ${book.author}`;
 
         const pages = document.createElement("p");
-        pages.textContent = book.pages;
+        pages.textContent = `Pages: ${book.pages}`;
 
         const status = document.createElement("p");
-        status.textContent = book.status;
+        status.textContent = `Status: ${book.status}`;
 
 
-        div.appendChild(title);
         div.appendChild(id);
+        div.appendChild(title);
         div.appendChild(author);
         div.appendChild(pages);
         div.appendChild(status);
