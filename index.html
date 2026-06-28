@@ -29,7 +29,11 @@
 
         <div class="book-container"></div>
 
-        <dialog class="book-details"></dialog>
+        <dialog class="book-details">
+            <div class="info-content"></div>
+            <button class="close-act">X</button>
+            <input type="checkbox" id="toggle">
+        </dialog>
 
         <dialog class="add-container">
             <form class="book-form">
@@ -48,7 +52,7 @@
                     <label for="read">Read</label>
                 </div>
                 <div>
-                    <input type="radio" name="status" id="unread" value="unread" checked>
+                    <input type="radio" name="status" id="unread" value="unread">
                     <label for="unread">Unread</label>
                 </div>
 

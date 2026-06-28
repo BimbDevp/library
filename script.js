@@ -5,6 +5,7 @@ const search = document.querySelector("input");
 const find = document.querySelector(".submit-btn");
 const add = document.querySelector(".add-btn");
 const display = document.querySelector(".book-container");
+const infoContent = document.querySelector(".info-content");
 const bookDetails = document.querySelector(".book-details");
 const addNewBook = document.querySelector(".add-container");
 const submitBook = document.querySelector(".submit-book");
@@ -12,13 +13,14 @@ const closeDialog = document.querySelector(".close-dialog");
 const title = document.querySelector("#title");
 const author = document.querySelector("#author");
 const pages = document.querySelector("#pages");
-const statusBook = document.querySelector("input[name='status']:checked");
 const bookForm = document.querySelector(".book-form")
+const closeAct = document.querySelector(".close-act");
+
 
 // Logic
 
 // storage
-const myLibrary = [];
+let myLibrary = [];
 
 // constructor
 function Book(title, author, pages, status) {
@@ -32,11 +34,14 @@ function Book(title, author, pages, status) {
 function addBookToLibrary(title, author, pages, status) {
     
     const newBook = new Book(title, author, pages, status);
+    
     myLibrary.push(newBook);
 }
 
 function searchBookInLibrary(title) {
-    bookDetails.innerHTML = "";
+    infoContent.innerHTML = "";
+   
+
     const foundBook = myLibrary.find(book => book.title === title)
         if (foundBook) {
             const id = document.createElement("p");
@@ -54,14 +59,20 @@ function searchBookInLibrary(title) {
             const status = document.createElement("p");
             status.textContent = `Status: ${foundBook.status}`;
 
+          
 
-            bookDetails.appendChild(id);
-            bookDetails.appendChild(title);
-            bookDetails.appendChild(author);
-            bookDetails.appendChild(pages);
-            bookDetails.appendChild(status);
-        
+
+            infoContent.appendChild(id);
+            infoContent.appendChild(title);
+            infoContent.appendChild(author);
+            infoContent.appendChild(pages);
+            infoContent.appendChild(status);
+            
+
+            bookDetails.appendChild(infoContent);
+            
             bookDetails.showModal();
+
         } else {
             const information = document.createElement("h1");
             information.textContent = "Book not found!";
@@ -95,12 +106,24 @@ function displayBook(arr){
         const status = document.createElement("p");
         status.textContent = `Status: ${book.status}`;
 
+       const toggleStatus = document.createElement("input");
+       toggleStatus.type = "checkbox";
+       toggleStatus.dataset.id = book.id;
+
+       if (book.status === "read") toggleStatus.checked = true;
+
+        const deleteBook = document.createElement("button")
+        deleteBook.classList.add("btn-delete");
+        deleteBook.textContent = "Delete";
+        deleteBook.dataset.id = book.id;
 
         div.appendChild(id);
         div.appendChild(title);
         div.appendChild(author);
         div.appendChild(pages);
         div.appendChild(status);
+        div.appendChild(toggleStatus);
+        div.appendChild(deleteBook);
 
         display.appendChild(div);
     })
@@ -123,11 +146,12 @@ add.addEventListener("click", () => addNewBook.showModal());
 
 submitBook.addEventListener("click", (e) => {
     e.preventDefault();
-    statusBook;
+    const currentStatusBook = document.querySelector("input[name='status']:checked");
 
-    const getStatus = statusBook ? statusBook.value : "unread";
+    const currentStatus = currentStatusBook ? currentStatusBook.value : "unread";
+    
 
-    addBookToLibrary(title.value, author.value, pages.value, getStatus);
+    addBookToLibrary(title.value, author.value, pages.value, currentStatus);
 
     displayBook(myLibrary);
 
@@ -138,8 +162,31 @@ submitBook.addEventListener("click", (e) => {
 
 closeDialog.addEventListener("click",() => addNewBook.close());
 
+closeAct.addEventListener("click", () => bookDetails.close());
 
+display.addEventListener("change", (e) => {
+   const clicked = e.target.dataset.id;
+   const changed = myLibrary.find(book => book.id === clicked);
 
+   if (changed) {
+    if (e.target.checked) changed.status = "read";
+    else changed.status = "unread";
+   }
+
+   displayBook(myLibrary);
+})
+
+display.addEventListener("click", (e) => {
+    if (!e.target.classList.contains('btn-delete')) return
+
+    const del = e.target.dataset.id;
+    myLibrary = myLibrary.filter(book => book.id !== del);
+    displayBook(myLibrary);
+
+    
+    
+
+})
 
 
 
