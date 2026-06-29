@@ -38,7 +38,7 @@ Book.prototype.toggleStatus = function() {
 function addBookToLibrary(title, author, pages, status) {
     
     const newBook = new Book(title, author, pages, status);
-    if (newBook.title === "" || newBook.author === "" || (typeof newBook.pages === "string" && isNaN(Number(newBook.pages)))){
+    if (newBook.title === "" || newBook.author === "" || (newBook.pages === "" || isNaN(Number(newBook.pages)))){
         alert("Your input invalid!")
     } else {
         
