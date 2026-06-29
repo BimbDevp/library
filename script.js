@@ -5,7 +5,7 @@ const search = document.querySelector("input");
 const find = document.querySelector(".submit-btn");
 const add = document.querySelector(".add-btn");
 const display = document.querySelector(".book-container");
-const infoContent = document.querySelector(".info-content");
+ const infoContent = document.querySelector(".info-content");
 const bookDetails = document.querySelector(".book-details");
 const addNewBook = document.querySelector(".add-container");
 const submitBook = document.querySelector(".submit-book");
@@ -31,14 +31,20 @@ function Book(title, author, pages, status) {
     this.status = status;
 }
 
+Book.prototype.toggleStatus = function() {
+    this.status = this.status === "read" ? "unread" : "read";
+}
+
 function addBookToLibrary(title, author, pages, status) {
     
     const newBook = new Book(title, author, pages, status);
+    
     
     myLibrary.push(newBook);
 }
 
 function searchBookInLibrary(title) {
+   
     infoContent.innerHTML = "";
    
 
@@ -69,7 +75,7 @@ function searchBookInLibrary(title) {
             infoContent.appendChild(status);
             
 
-            bookDetails.appendChild(infoContent);
+        
             
             bookDetails.showModal();
 
@@ -78,7 +84,7 @@ function searchBookInLibrary(title) {
             information.textContent = "Book not found!";
 
 
-            bookDetails.appendChild(information);
+            infoContent.appendChild(information);
             bookDetails.showModal();
         }
  
@@ -169,11 +175,11 @@ display.addEventListener("change", (e) => {
    const changed = myLibrary.find(book => book.id === clicked);
 
    if (changed) {
-    if (e.target.checked) changed.status = "read";
-    else changed.status = "unread";
+    changed.toggleStatus();
+    displayBook(myLibrary);
    }
 
-   displayBook(myLibrary);
+   
 })
 
 display.addEventListener("click", (e) => {

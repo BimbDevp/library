@@ -38,7 +38,8 @@ body {
     gap: 8px;
 }
 
-input {
+input[type='text'],
+input[type='tel'] {
     width: 70%;
     border: none;
     outline: none;
@@ -72,10 +73,45 @@ button {
     gap: 1rem;
 }
 
-.card {
+.card,
+.book-details:open,
+.add-container:open {
+    border: none;
     background-color: #fff;
     padding: 1rem;
     border-radius: 15px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
     font-size: 0.8rem;
+}
+
+.book-details:open {
+    display: grid;
+    align-items: center;
+}
+
+
+.close-act {
+    text-align: center;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    grid-column: calc();
+    margin-left: auto;
+    grid-row: 1;
+}
+
+
+.book-form {
+    padding: 2rem;
+    display: grid;
+    width: 100%;
+    box-sizing: border-box;
+    grid-template-columns: repeat(auto-fill, minmax(auto, 1fr));
+    gap: 1rem;
+}
+
+.book-form div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
