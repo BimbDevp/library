@@ -38,9 +38,12 @@ Book.prototype.toggleStatus = function() {
 function addBookToLibrary(title, author, pages, status) {
     
     const newBook = new Book(title, author, pages, status);
-    
-    
-    myLibrary.push(newBook);
+    if (newBook.title === "" || newBook.author === "" || (typeof newBook.pages === "string" && isNaN(Number(newBook.pages)))){
+        alert("Your input invalid!")
+    } else {
+        
+        myLibrary.push(newBook);
+    }
 }
 
 function searchBookInLibrary(title) {
@@ -48,7 +51,7 @@ function searchBookInLibrary(title) {
     infoContent.innerHTML = "";
    
 
-    const foundBook = myLibrary.find(book => book.title === title)
+    const foundBook = myLibrary.find(book => book.title.toLowerCase() === title.toLowerCase());
         if (foundBook) {
             const id = document.createElement("p");
             id.textContent = `ID: ${foundBook.id}`;
