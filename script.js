@@ -22,18 +22,24 @@ const closeAct = document.querySelector(".close-act");
 // storage
 let myLibrary = [];
 
-// constructor
-function Book(title, author, pages, status) {
-    this.id = crypto.randomUUID();
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.status = status;
+
+
+class Book {
+
+    constructor(title, author, pages, status) {
+        this.id = crypto.randomUUID();
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.status = status;
+    }
+
+    toggleStatus() {
+        this.status = this.status === "read" ? "unread" : "read";
+    }
 }
 
-Book.prototype.toggleStatus = function() {
-    this.status = this.status === "read" ? "unread" : "read";
-}
+
 
 function addBookToLibrary(title, author, pages, status) {
     
